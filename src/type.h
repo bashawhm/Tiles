@@ -13,10 +13,11 @@ typedef int64_t i64;
 typedef int32_t i32;
 typedef int16_t i16;
 typedef int8_t i8;
+typedef i8 bool;
 
 
-#define true 1
-#define false 0
+#define true 0 == 0
+#define false 0 == 1
 
 
 #endif

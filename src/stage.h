@@ -12,18 +12,21 @@ typedef enum State{
 typedef struct Stage {
 	SDL_Window * window;
 	SDL_Renderer * renderer;
+	bool needsUpdate;
 
-	u8 alive;
+
+	bool alive;
 	State currState;
 } Stage;
 
 
-Stage * newGame(SDL_Window *win, SDL_Renderer *ren, u8 alive, State newState){
+Stage * newGame(SDL_Window *win, SDL_Renderer *ren, State newState){
 	Stage *newStage = (Stage *)malloc(sizeof(Stage));
 	newStage -> window = win;
 	newStage -> renderer = ren;
-	newStage -> alive = alive;
+	newStage -> alive = true;
 	newStage -> currState = newState;
+	newStage -> needsUpdate = true;
 	return newStage;
 }
 

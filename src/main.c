@@ -12,6 +12,12 @@ int main(){
 	SDL_Window * window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
+	Stage *game = newStage(window, renderer, Menu);
+
+	while (game -> alive){
+
+	}
+	
 
 /*
 	SDL_Surface *png = IMG_Load("assets/something.png");
