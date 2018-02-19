@@ -16,8 +16,8 @@ typedef int8_t i8;
 typedef i8 bool;
 
 
-#define true 0 == 0
-#define false 0 == 1
+#define true 1
+#define false 0
 
 
 #endif

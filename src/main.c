@@ -4,18 +4,31 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
+#include "event.h"
 #include "stage.h"
 
-
 int main(){
+	
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window * window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
-	Stage *game = newStage(window, renderer, Menu);
+	
+	Stage *stage = newGame(window, renderer, Menu);
 
-	while (game -> alive){
+	
+	while (stage -> alive){
+		switch (stage -> currState){
+		case Menu: {
+			startMenuInput(stage);
+			break;
+		}
+		case Game: {
+			startGameInput(stage);
+			break;
+		}
 
+		}
 	}
 	
 
@@ -31,6 +44,7 @@ int main(){
 
 	SDL_DestroyTexture(tex);
 */
+
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();

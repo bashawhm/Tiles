@@ -1,7 +1,7 @@
 #ifndef _STAGE_H_
 #define _STAGE_H_
 #include "type.h"
-
+#include "SDL2/SDL.h"
 
 typedef enum State{
 	Menu,
