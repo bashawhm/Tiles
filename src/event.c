@@ -2,6 +2,7 @@
 #include "stage.h"
 #include "type.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_Image.h"
 
 
 void menuEvents(Stage *stage){
@@ -30,8 +31,8 @@ void menuEvents(Stage *stage){
 			}
 			//New Game Button
 			if ((mouseX > ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET)) && (mouseX < ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET + 200)) && (mouseY > ((stage -> screenHeight / 2) - (stage -> screenHeight / 6))) && (mouseY < (stage -> screenHeight / 2) - (stage -> screenHeight / 6) + 40)){
-				// printf("clicked new game!\n");
 				//Spawn new Game
+				initTiles(stage);
 				stage -> needsUpdate = true;
 				stage -> currState = GameMode;
 			}
@@ -76,7 +77,11 @@ void gameEvents(Stage *stage){
 			i32 mouseX;
 			i32 mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
-			
+			i32 tileX = (mouseX / (stage -> screenWidth / 16));
+			i32 tileY = (mouseY / (stage -> screenHeight / 16));
+			// printf("tileX: %d  |  tileY %d\n", tileX, tileY);
+			stage -> game -> tiles[tileX][tileY].type = dark;
+			stage -> needsUpdate = true;
 			break;
 		}
 		case SDL_WINDOWEVENT_RESIZED: {

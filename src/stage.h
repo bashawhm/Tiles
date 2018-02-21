@@ -7,8 +7,18 @@ typedef enum State{
 	GameMode,
 } State;
 
+typedef enum Type {
+	normal,
+	dark,
+} Type;
+
+typedef struct Tile {
+	SDL_Rect tile;
+	Type type;
+} Tile;
+
 typedef struct Game {
-	SDL_Rect tiles[16][16];
+	Tile tiles[16][16];
 
 } Game;
 

@@ -7,10 +7,15 @@
 void initTiles(Stage *stage) {
 	for (i32 i = 0; i < 16; ++i){
 		for (i32 j = 0; j < 16; ++j){
-			stage -> game -> tiles[i][j].x = ((WINWIDTH / 16) * i);
-			stage -> game -> tiles[i][j].y = ((WINHEIGHT / 16) * j);
-			stage -> game -> tiles[i][j].w = (WINWIDTH / 16);
-			stage -> game -> tiles[i][j].h = (WINHEIGHT / 16);
+			stage -> game -> tiles[i][j].type = normal;
+		}
+	}
+	for (i32 i = 0; i < 16; ++i){
+		for (i32 j = 0; j < 16; ++j){
+			stage -> game -> tiles[i][j].tile.x = ((WINWIDTH / 16) * i);
+			stage -> game -> tiles[i][j].tile.y = ((WINHEIGHT / 16) * j);
+			stage -> game -> tiles[i][j].tile.w = (WINWIDTH / 16);
+			stage -> game -> tiles[i][j].tile.h = (WINHEIGHT / 16);
 		}
 	}
 }
@@ -36,9 +41,17 @@ void renderGame(Stage *stage){
 		SDL_Texture *tileTex = SDL_CreateTextureFromSurface(stage -> renderer, tileSur);
 		SDL_FreeSurface(tileSur);
 
+		SDL_Surface *dTileSur = IMG_Load("assets/darkTile.png");
+		SDL_Texture *dTileTex = SDL_CreateTextureFromSurface(stage -> renderer, dTileSur);
+		SDL_FreeSurface(dTileSur);
+
 		for (i32 i = 0; i < 16; ++i){
 			for (i32 j = 0; j < 16; ++j){
-				SDL_RenderCopy(stage -> renderer, tileTex, NULL, &(stage -> game -> tiles[i][j]));
+				if ((stage -> game -> tiles[i][j].type) == normal){
+					SDL_RenderCopy(stage -> renderer, tileTex, NULL, &(stage -> game -> tiles[i][j].tile));
+				} else if ((stage -> game -> tiles[i][j].type) == dark) {
+					SDL_RenderCopy(stage -> renderer, dTileTex, NULL, &(stage -> game -> tiles[i][j].tile));
+				}
 			}
 		}
 
