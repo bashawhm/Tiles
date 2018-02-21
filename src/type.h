@@ -22,7 +22,7 @@ typedef u8 bool;
 //Universal Truths
 #define EXITBUTTONXOFFSET 40
 #define NEWGAMEBUTTONXOFFSET 90
-#define WINHIGHT 480
+#define WINHEIGHT 480
 #define WINWIDTH 640
 
 

@@ -32,6 +32,7 @@ void menuEvents(Stage *stage){
 			if ((mouseX > ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET)) && (mouseX < ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET + 200)) && (mouseY > ((stage -> screenHeight / 2) - (stage -> screenHeight / 6))) && (mouseY < (stage -> screenHeight / 2) - (stage -> screenHeight / 6) + 40)){
 				// printf("clicked new game!\n");
 				//Spawn new Game
+				stage -> needsUpdate = true;
 				stage -> currState = GameMode;
 			}
 
