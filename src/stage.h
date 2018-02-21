@@ -4,8 +4,8 @@
 #include "SDL2/SDL.h"
 
 typedef enum State{
-	Menu,
-	Game,
+	MenuMode,
+	GameMode,
 } State;
 
 

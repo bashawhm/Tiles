@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
 
+#include "menu.h"
 #include "event.h"
 #include "stage.h"
 
@@ -18,16 +18,23 @@ int main(){
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
 	
-	Stage *stage = newGame(window, renderer, Menu, WINHIGHT, WINWIDTH);
+	Stage *stage = newGame(window, renderer, MenuMode, WINHIGHT, WINWIDTH);
+	initMenu(stage, WINHIGHT, WINWIDTH);
+	// SDL_Delay(5000);
 
+	//Main Event Loop
 	while (stage -> alive){
+		if (stage -> needsUpdate){
+			SDL_RenderPresent(stage -> renderer);
+			stage -> needsUpdate = false;
+		}
+
 		switch (stage -> currState){
-		case Menu: {
+		case MenuMode: {
 			menuEvents(stage);
-			// initMenu();
 			break;
 		}
-		case Game: {
+		case GameMode: {
 			gameEvents(stage);
 			break;
 		}
@@ -36,18 +43,6 @@ int main(){
 
 	}
 	
-
-/*
-	SDL_Surface *png = IMG_Load("assets/something.png");
-	SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, png);
-	SDL_FreeSurface(png);
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, tex, NULL, NULL);
-	SDL_RenderPresent(renderer);
-	SDL_Delay(5000);
-	
-	SDL_DestroyTexture(tex);
-*/
 
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
