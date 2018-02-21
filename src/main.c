@@ -3,10 +3,7 @@
 #include <unistd.h>
 #include "SDL2/SDL.h"
 
-#include "menu.h"
-#include "event.h"
 #include "stage.h"
-#include "game.h"
 
 
 int main(){

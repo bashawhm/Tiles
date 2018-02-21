@@ -1,5 +1,4 @@
-#ifndef _STAGE_H_
-#define _STAGE_H_
+#pragma once
 #include "type.h"
 #include "SDL2/SDL.h"
 
@@ -24,7 +23,7 @@ typedef struct Stage {
 } Stage;
 
 
-Stage * newGame(SDL_Window *win, SDL_Renderer *ren, State newState, i32 height, i32 width){
+static inline Stage * newGame(SDL_Window *win, SDL_Renderer *ren, State newState, i32 height, i32 width){
 	Stage *newStage = (Stage *)malloc(sizeof(Stage));
 	newStage -> window = win;
 	newStage -> renderer = ren;
@@ -36,4 +35,3 @@ Stage * newGame(SDL_Window *win, SDL_Renderer *ren, State newState, i32 height, 
 	return newStage;
 }
 
-#endif

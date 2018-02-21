@@ -4,7 +4,7 @@ LDFLAGS += `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
 
 TARGET := tiles
 
-SRC := main.c
+SRC := main.c event.c menu.c game.c
 
 DEPS := $(addprefix .build/,$(SRC:.c=.d))
 OBJS := $(addprefix .build/,$(SRC:.c=.o))

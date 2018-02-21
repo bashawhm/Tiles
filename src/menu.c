@@ -1,13 +1,7 @@
-#ifndef _MENU_H_
-#define _MENU_H_
 #include "stage.h"
 #include "type.h"
 #include "SDL2/SDL_image.h"
 
-
-// typedef struct MainMenu {
-		
-// } MainMenu;
 
 void renderMenu(Stage *stage){
 	if (stage -> needsUpdate) {
@@ -61,5 +55,3 @@ void renderMenu(Stage *stage){
 		SDL_RenderPresent(stage -> renderer);
 	}
 }
-
-#endif

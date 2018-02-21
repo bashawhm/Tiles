@@ -1,5 +1,4 @@
-#ifndef _TYPE_H_
-#define _TYPE_H_
+#pragma once 
 #include <stdint.h>
 
 
@@ -27,4 +26,3 @@ typedef u8 bool;
 #define WINWIDTH 640
 
 
-#endif
