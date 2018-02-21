@@ -7,28 +7,33 @@
 #include "event.h"
 #include "stage.h"
 
+#define WINHIGHT 480
+#define WINWIDTH 640
+
+
+
 int main(){
-	
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Window * window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+	SDL_Window * window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINWIDTH, WINHIGHT, SDL_WINDOW_SHOWN);
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
 	
-	Stage *stage = newGame(window, renderer, Menu);
+	Stage *stage = newGame(window, renderer, Menu, WINHIGHT, WINWIDTH);
 
-	
 	while (stage -> alive){
 		switch (stage -> currState){
 		case Menu: {
-			startMenuInput(stage);
+			menuEvents(stage);
+			// initMenu();
 			break;
 		}
 		case Game: {
-			startGameInput(stage);
+			gameEvents(stage);
 			break;
 		}
-
 		}
+		
+
 	}
 	
 
@@ -41,7 +46,6 @@ int main(){
 	SDL_RenderPresent(renderer);
 	SDL_Delay(5000);
 	
-
 	SDL_DestroyTexture(tex);
 */
 

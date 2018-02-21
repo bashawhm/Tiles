@@ -5,7 +5,7 @@
 #include "SDL2/SDL.h"
 
 
-void startMenuInput(Stage *stage){
+void menuEvents(Stage *stage){
 	SDL_Event event;
 	while (SDL_PollEvent(&event)){
 		switch (event.type) {
@@ -15,12 +15,17 @@ void startMenuInput(Stage *stage){
 				stage -> alive = false;
 				break;
 			}
-			
+
 			}
+			break;
+		}
+		case SDL_WINDOWEVENT_RESIZED: {
+			//resize code goes here!
 			break;
 		}
 		case SDL_QUIT: {
 			stage -> alive = false;
+			break;
 		}
 
 
@@ -31,7 +36,7 @@ void startMenuInput(Stage *stage){
 }
 
 
-void startGameInput(Stage *stage){
+void gameEvents(Stage *stage){
 
 
 
