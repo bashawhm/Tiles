@@ -7,10 +7,6 @@
 #include "event.h"
 #include "stage.h"
 
-#define WINHIGHT 480
-#define WINWIDTH 640
-
-
 
 int main(){
 	SDL_Init(SDL_INIT_VIDEO);
@@ -19,18 +15,13 @@ int main(){
 
 	
 	Stage *stage = newGame(window, renderer, MenuMode, WINHIGHT, WINWIDTH);
-	initMenu(stage, WINHIGHT, WINWIDTH);
-	// SDL_Delay(5000);
+	renderMenu(stage);
 
 	//Main Event Loop
 	while (stage -> alive){
-		if (stage -> needsUpdate){
-			SDL_RenderPresent(stage -> renderer);
-			stage -> needsUpdate = false;
-		}
-
 		switch (stage -> currState){
 		case MenuMode: {
+			renderMenu(stage);
 			menuEvents(stage);
 			break;
 		}
@@ -40,7 +31,7 @@ int main(){
 		}
 		}
 		
-
+		SDL_Delay(100);
 	}
 	
 

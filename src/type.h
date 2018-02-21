@@ -20,4 +20,10 @@ typedef u8 bool;
 #define false 0
 
 
+//Universal Truths
+#define BUTTONXOFFSET 40
+#define WINHIGHT 480
+#define WINWIDTH 640
+
+
 #endif
