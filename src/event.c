@@ -63,7 +63,9 @@ void gameEvents(Stage *stage){
 		case SDL_KEYDOWN: {
 			switch (event.key.keysym.sym){
 			case SDLK_ESCAPE: {
-				stage -> alive = false;
+				//Go back to main menu
+				stage -> currState = MenuMode;
+				stage -> needsUpdate = true;
 				break;
 			}
 

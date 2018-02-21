@@ -25,7 +25,6 @@ void renderGame(Stage *stage){
 		gameFrame.h = stage -> screenHeight;
 
 
-		fprintf(stderr, "load menu.png\n");
 		//Load some surface
 		SDL_Surface *background = IMG_Load("assets/menu.png");
 		SDL_Texture *tex = SDL_CreateTextureFromSurface(stage -> renderer, background);
