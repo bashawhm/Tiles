@@ -31,15 +31,28 @@ void renderMenu(Stage *stage){
 		SDL_Surface *exitSur = IMG_Load("assets/exit.png");
 		SDL_Texture *exitTex = SDL_CreateTextureFromSurface(stage -> renderer, exitSur);
 		SDL_FreeSurface(exitSur);
+		
+		//Load texture for new game button
+		SDL_Surface *newGameSur = IMG_Load("assets/newGame.png");
+		SDL_Texture *newGameTex = SDL_CreateTextureFromSurface(stage -> renderer, newGameSur);
+		SDL_FreeSurface(newGameSur);
 
 
 		//Create rectangle for exit button
 		SDL_Rect exitButton;
-		exitButton.x = (width / 2) - BUTTONXOFFSET;
+		exitButton.x = (width / 2) - EXITBUTTONXOFFSET;
 		exitButton.y = (height / 2) + (height / 4);
 		exitButton.w = 100;
 		exitButton.h = 40;
 		SDL_RenderCopy(stage -> renderer, exitTex, NULL, &exitButton);
+
+		//New game button
+		SDL_Rect newGameButton;
+		newGameButton.x = (width / 2) - NEWGAMEBUTTONXOFFSET;
+		newGameButton.y = (height / 2) - (height / 6);
+		newGameButton.w = 200;
+		newGameButton.h = 40;
+		SDL_RenderCopy(stage -> renderer, newGameTex, NULL, &newGameButton);
 		
 		SDL_DestroyTexture(tex);
 		SDL_DestroyTexture(exitTex);

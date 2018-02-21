@@ -12,13 +12,15 @@ typedef enum State{
 typedef struct Stage {
 	SDL_Window * window;
 	SDL_Renderer * renderer;
-	bool needsUpdate;
+	
 	i32 screenWidth;
 	i32 screenHeight;
 
-
-	bool alive;
 	State currState;
+	bool alive;
+	bool needsUpdate;
+	char _unused[2];
+	
 } Stage;
 
 

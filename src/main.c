@@ -6,6 +6,7 @@
 #include "menu.h"
 #include "event.h"
 #include "stage.h"
+#include "game.h"
 
 
 int main(){
@@ -26,6 +27,7 @@ int main(){
 			break;
 		}
 		case GameMode: {
+			renderGame(stage);
 			gameEvents(stage);
 			break;
 		}
@@ -41,4 +43,3 @@ int main(){
 
 	return 0;
 }
-
