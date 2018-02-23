@@ -24,5 +24,5 @@ typedef u8 bool;
 #define NEWGAMEBUTTONXOFFSET 90
 #define WINHEIGHT 480
 #define WINWIDTH 640
-
+#define TILENUM 16
 

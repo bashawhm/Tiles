@@ -18,7 +18,7 @@ typedef struct Tile {
 } Tile;
 
 typedef struct Game {
-	Tile tiles[16][16];
+	Tile tiles[TILENUM][TILENUM];
 
 } Game;
 
@@ -38,11 +38,11 @@ typedef struct Stage {
 } Stage;
 
 
-static inline Stage * newGame(SDL_Window *win, SDL_Renderer *ren, State newState, i32 height, i32 width){
+static inline Stage * newStage(State newState, i32 height, i32 width){
 	Stage *newStage = (Stage *)malloc(sizeof(Stage));
 	Game *game = (Game *)malloc(sizeof(Game));
-	newStage -> window = win;
-	newStage -> renderer = ren;
+	newStage -> window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINWIDTH, WINHEIGHT, SDL_WINDOW_SHOWN);
+	newStage -> renderer = SDL_CreateRenderer(newStage -> window, -1, SDL_RENDERER_PRESENTVSYNC);
 	newStage -> game = game;
 	newStage -> alive = true;
 	newStage -> currState = newState;
@@ -52,3 +52,14 @@ static inline Stage * newGame(SDL_Window *win, SDL_Renderer *ren, State newState
 	return newStage;
 }
 
+static inline void destroyStage(Stage * stage){
+	SDL_DestroyWindow(stage -> window);
+	SDL_DestroyRenderer(stage -> renderer);
+	free(stage -> game);
+	free(stage);
+	SDL_Quit();
+}
+
+static inline void initGraphics(){
+	SDL_Init(SDL_INIT_VIDEO);
+}

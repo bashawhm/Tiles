@@ -3,3 +3,5 @@
 .build/
 .vscode/
 tiles
+src/.DS_Store
+assets/.DS_Store

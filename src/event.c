@@ -77,12 +77,15 @@ void gameEvents(Stage *stage){
 			i32 mouseX;
 			i32 mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
-			i32 tileX = (mouseX / (stage -> screenWidth / 16));
-			i32 tileY = (mouseY / (stage -> screenHeight / 16));
+			i32 tileX = (mouseX / (stage -> screenWidth / TILENUM));
+			i32 tileY = (mouseY / (stage -> screenHeight / TILENUM));
 			// printf("tileX: %d  |  tileY %d\n", tileX, tileY);
+			
 			stage -> game -> tiles[tileX][tileY].type = dark;
 			stage -> needsUpdate = true;
 			break;
+			
+			
 		}
 		case SDL_WINDOWEVENT_RESIZED: {
 			//resize code goes here!

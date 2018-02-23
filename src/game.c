@@ -5,17 +5,17 @@
 
 
 void initTiles(Stage *stage) {
-	for (i32 i = 0; i < 16; ++i){
-		for (i32 j = 0; j < 16; ++j){
+	for (i32 i = 0; i < TILENUM; ++i){
+		for (i32 j = 0; j < TILENUM; ++j){
 			stage -> game -> tiles[i][j].type = normal;
 		}
 	}
-	for (i32 i = 0; i < 16; ++i){
-		for (i32 j = 0; j < 16; ++j){
-			stage -> game -> tiles[i][j].tile.x = ((WINWIDTH / 16) * i);
-			stage -> game -> tiles[i][j].tile.y = ((WINHEIGHT / 16) * j);
-			stage -> game -> tiles[i][j].tile.w = (WINWIDTH / 16);
-			stage -> game -> tiles[i][j].tile.h = (WINHEIGHT / 16);
+	for (i32 i = 0; i < TILENUM; ++i){
+		for (i32 j = 0; j < TILENUM; ++j){
+			stage -> game -> tiles[i][j].tile.x = ((WINWIDTH / TILENUM) * i);
+			stage -> game -> tiles[i][j].tile.y = ((WINHEIGHT / TILENUM) * j);
+			stage -> game -> tiles[i][j].tile.w = (WINWIDTH / TILENUM);
+			stage -> game -> tiles[i][j].tile.h = (WINHEIGHT / TILENUM);
 		}
 	}
 }
@@ -45,8 +45,8 @@ void renderGame(Stage *stage){
 		SDL_Texture *dTileTex = SDL_CreateTextureFromSurface(stage -> renderer, dTileSur);
 		SDL_FreeSurface(dTileSur);
 
-		for (i32 i = 0; i < 16; ++i){
-			for (i32 j = 0; j < 16; ++j){
+		for (i32 i = 0; i < TILENUM; ++i){
+			for (i32 j = 0; j < TILENUM; ++j){
 				if ((stage -> game -> tiles[i][j].type) == normal){
 					SDL_RenderCopy(stage -> renderer, tileTex, NULL, &(stage -> game -> tiles[i][j].tile));
 				} else if ((stage -> game -> tiles[i][j].type) == dark) {
