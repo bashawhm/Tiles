@@ -2,7 +2,7 @@
 #include "stage.h"
 #include "type.h"
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_Image.h"
+#include "SDL2/SDL_image.h"
 
 
 void menuEvents(Stage *stage){
@@ -77,11 +77,26 @@ void gameEvents(Stage *stage){
 			i32 mouseX;
 			i32 mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
+			//This is messy sorry. Haven't /yet/ figured out a clean way to fix it.
+			//Bulldozer button
+			if (mouseX > (WINWIDTH - (WINWIDTH / TILENUM)) && (mouseX < (WINWIDTH - (WINWIDTH / TILENUM) + (WINWIDTH / TILENUM))) && (mouseY > (WINHEIGHT - 2 * (WINHEIGHT / TILENUM))) && (mouseY < (WINHEIGHT - 2 * (WINHEIGHT / TILENUM) + (WINHEIGHT / TILENUM)))) {
+				if (stage -> stagedEvent == None){
+					stage -> stagedEvent = Bulldozer;
+				// Else if required for when there are more than two states of stagedEvent
+				} else if (stage -> stagedEvent == Bulldozer) {
+					stage -> stagedEvent = None;
+				}
+			}
+
 			i32 tileX = (mouseX / (stage -> screenWidth / TILENUM));
 			i32 tileY = (mouseY / (stage -> screenHeight / TILENUM));
 			// printf("tileX: %d  |  tileY %d\n", tileX, tileY);
-			
-			stage -> game -> tiles[tileX][tileY].type = dark;
+			if (stage -> stagedEvent == Bulldozer){
+				stage -> game -> tiles[tileX][tileY].type = Normal;
+			// Else if required for when there are more than two states of stagedEvent
+			} else if (stage -> stagedEvent == None) {
+				stage -> game -> tiles[tileX][tileY].type = Dark;
+			}
 			stage -> needsUpdate = true;
 			break;
 			

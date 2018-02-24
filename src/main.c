@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include "stage.h"
 #include "type.h"
 
 int main(){
 	initGraphics();
-	
+
 	Stage *stage = newStage(MenuMode, WINHEIGHT, WINWIDTH);
 	initTiles(stage);
 	renderMenu(stage);
@@ -26,8 +27,8 @@ int main(){
 			break;
 		}
 		}
-		
-		usleep(16666.7);
+		//~60Hz
+		usleep(16667);
 	}
 	
 	destroyStage(stage);

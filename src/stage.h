@@ -7,14 +7,19 @@ typedef enum State{
 	GameMode,
 } State;
 
-typedef enum Type {
-	normal,
-	dark,
-} Type;
+typedef enum TileType {
+	Normal,
+	Dark,
+} TileType;
+
+typedef enum StagedEvent {
+	None,
+	Bulldozer,
+} StagedEvent;
 
 typedef struct Tile {
 	SDL_Rect tile;
-	Type type;
+	TileType type;
 } Tile;
 
 typedef struct Game {
@@ -31,6 +36,7 @@ typedef struct Stage {
 	i32 screenHeight;
 
 	State currState;
+	StagedEvent stagedEvent;
 	bool alive;
 	bool needsUpdate;
 	char _unused[2];
@@ -46,6 +52,7 @@ static inline Stage * newStage(State newState, i32 height, i32 width){
 	newStage -> game = game;
 	newStage -> alive = true;
 	newStage -> currState = newState;
+	newStage -> stagedEvent = None;
 	newStage -> screenWidth = width;
 	newStage -> screenHeight = height;
 	newStage -> needsUpdate = true;
@@ -60,6 +67,6 @@ static inline void destroyStage(Stage * stage){
 	SDL_Quit();
 }
 
-static inline void initGraphics(){
+static inline void initGraphics(void){
 	SDL_Init(SDL_INIT_VIDEO);
 }
