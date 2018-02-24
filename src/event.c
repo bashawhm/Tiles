@@ -15,7 +15,7 @@ void menuEvents(Stage *stage){
 				stage -> alive = false;
 				break;
 			}
-
+		
 			}
 			break;
 		}
@@ -35,6 +35,13 @@ void menuEvents(Stage *stage){
 				initTiles(stage);
 				stage -> needsUpdate = true;
 				stage -> currState = GameMode;
+			}
+			//Resume game button
+			if (stage -> currState == EscMenuMode) {
+				if ((mouseX > ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET)) && (mouseX < ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET) + 200) && (mouseY > (stage -> screenHeight / 2) - (stage -> screenHeight / 16)) && (mouseY < ((stage -> screenHeight / 2) - (stage -> screenHeight / 16) + 40))) {
+					stage -> currState = GameMode;
+					stage -> needsUpdate = true;
+				}
 			}
 
 
@@ -64,12 +71,25 @@ void gameEvents(Stage *stage){
 		case SDL_KEYDOWN: {
 			switch (event.key.keysym.sym){
 			case SDLK_ESCAPE: {
-				//Go back to main menu
-				stage -> currState = MenuMode;
+				//Go back to main menu or deselect current staged event i.e. unclick button
+				if (stage -> stagedEvent == None){
+					stage -> currState = EscMenuMode;
+				} else {
+					stage -> stagedEvent = None;
+				}
 				stage -> needsUpdate = true;
 				break;
 			}
-
+			//Bulldozer Hotkey
+			case SDLK_b: {
+				if (stage -> stagedEvent != Bulldozer){
+					stage -> stagedEvent = Bulldozer;
+				} else if (stage -> stagedEvent == Bulldozer) {
+					stage -> stagedEvent = None;
+				}
+				stage -> needsUpdate = true;
+				break;
+			}
 			}
 			break;
 		}
@@ -78,8 +98,12 @@ void gameEvents(Stage *stage){
 			i32 mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
 			//This is messy sorry. Haven't /yet/ figured out a clean way to fix it.
+			//Ignore if they click within the legend
+			if ((mouseY > stage -> screenHeight - (2 * (stage -> screenHeight / TILENUM))) && (mouseY < stage -> screenHeight)) {
+				break;
+			}
 			//Bulldozer button
-			if (mouseX > (WINWIDTH - (WINWIDTH / TILENUM)) && (mouseX < (WINWIDTH - (WINWIDTH / TILENUM) + (WINWIDTH / TILENUM))) && (mouseY > (WINHEIGHT - 2 * (WINHEIGHT / TILENUM))) && (mouseY < (WINHEIGHT - 2 * (WINHEIGHT / TILENUM) + (WINHEIGHT / TILENUM)))) {
+			if (mouseX > (stage -> screenWidth - (stage -> screenWidth / TILENUM)) && (mouseX < (stage -> screenWidth - (stage -> screenWidth / TILENUM) + (stage -> screenWidth / TILENUM))) && (mouseY > (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM))) && (mouseY < (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM) + (stage -> screenHeight / TILENUM)))) {
 				if (stage -> stagedEvent == None){
 					stage -> stagedEvent = Bulldozer;
 				// Else if required for when there are more than two states of stagedEvent

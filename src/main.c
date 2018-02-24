@@ -21,6 +21,11 @@ int main(){
 			menuEvents(stage);
 			break;
 		}
+		case EscMenuMode: {
+			renderMenu(stage);
+			menuEvents(stage);
+			break;
+		}
 		case GameMode: {
 			renderGame(stage);
 			gameEvents(stage);

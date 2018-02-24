@@ -31,6 +31,11 @@ void renderMenu(Stage *stage){
 		SDL_Texture *newGameTex = SDL_CreateTextureFromSurface(stage -> renderer, newGameSur);
 		SDL_FreeSurface(newGameSur);
 
+		//Load texture for resume button
+		SDL_Surface *resumeSur = IMG_Load("assets/resume.png");
+		SDL_Texture *resumeTex = SDL_CreateTextureFromSurface(stage -> renderer, resumeSur);
+		SDL_FreeSurface(resumeSur);
+
 
 		//Create rectangle for exit button
 		SDL_Rect exitButton;
@@ -47,9 +52,20 @@ void renderMenu(Stage *stage){
 		newGameButton.w = 200;
 		newGameButton.h = 40;
 		SDL_RenderCopy(stage -> renderer, newGameTex, NULL, &newGameButton);
+
+		//Resume Button
+		if (stage -> currState == EscMenuMode) {
+			SDL_Rect resumeButton;
+			resumeButton.x = ((width / 2) - NEWGAMEBUTTONXOFFSET);
+			resumeButton.y = (height / 2) - (height / 16);
+			resumeButton.w = 200;
+			resumeButton.h = 40;
+			SDL_RenderCopy(stage -> renderer, resumeTex, NULL, &resumeButton);
+		}
 		
 		SDL_DestroyTexture(tex);
 		SDL_DestroyTexture(exitTex);
+		SDL_DestroyTexture(resumeTex);
 		
 		stage -> needsUpdate = false;
 		SDL_RenderPresent(stage -> renderer);

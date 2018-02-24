@@ -4,12 +4,14 @@
 
 typedef enum State{
 	MenuMode,
+	EscMenuMode,
 	GameMode,
 } State;
 
 typedef enum TileType {
 	Normal,
 	Dark,
+	Residential,
 } TileType;
 
 typedef enum StagedEvent {

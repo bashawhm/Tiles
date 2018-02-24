@@ -14,10 +14,10 @@ void initTiles(Stage *stage) {
 	}
 	for (i32 i = 0; i < TILENUM; ++i){
 		for (i32 j = 0; j < TILENUM; ++j){
-			stage -> game -> tiles[i][j].tile.x = ((WINWIDTH / TILENUM) * i);
-			stage -> game -> tiles[i][j].tile.y = ((WINHEIGHT / TILENUM) * j);
-			stage -> game -> tiles[i][j].tile.w = (WINWIDTH / TILENUM);
-			stage -> game -> tiles[i][j].tile.h = (WINHEIGHT / TILENUM);
+			stage -> game -> tiles[i][j].tile.x = ((stage -> screenWidth / TILENUM) * i);
+			stage -> game -> tiles[i][j].tile.y = ((stage -> screenHeight / TILENUM) * j);
+			stage -> game -> tiles[i][j].tile.w = (stage -> screenWidth / TILENUM);
+			stage -> game -> tiles[i][j].tile.h = (stage -> screenHeight / TILENUM);
 		}
 	}
 }
@@ -70,21 +70,26 @@ void renderLegend(Stage *stage){
 
 		SDL_Rect legend;
 		legend.x = 0;
-		legend.y = WINHEIGHT - (2 * WINHEIGHT / TILENUM);
-		legend.w = WINWIDTH;
-		legend.h = (2 * WINHEIGHT / TILENUM);
+		legend.y = stage -> screenHeight - (2 * (stage -> screenHeight / TILENUM));
+		legend.w = stage -> screenWidth;
+		legend.h = (2 * (stage -> screenHeight / TILENUM));
 		SDL_RenderCopy(stage -> renderer, legTex, NULL, &legend);
 
 		//Render Bulldozer
-		SDL_Surface *bullSur = IMG_Load("assets/bulldozer.png");
+		SDL_Surface *bullSur;
+		if (stage -> stagedEvent == None) {
+			bullSur = IMG_Load("assets/bulldozer.png");
+		} else {
+			bullSur = IMG_Load("assets/bulldozerDark.png");
+		}
 		SDL_Texture *bullTex = SDL_CreateTextureFromSurface(stage -> renderer, bullSur);
 		SDL_FreeSurface(bullSur);
 
 		SDL_Rect bullButton;
-		bullButton.x = (WINWIDTH - (WINWIDTH / TILENUM));
-		bullButton.y = (WINHEIGHT - 2 * (WINHEIGHT / TILENUM));
-		bullButton.w = (WINWIDTH / TILENUM);
-		bullButton.h = (WINHEIGHT / TILENUM);
+		bullButton.x = (stage -> screenWidth - (stage -> screenWidth / TILENUM));
+		bullButton.y = (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM));
+		bullButton.w = (stage -> screenWidth / TILENUM);
+		bullButton.h = (stage -> screenHeight / TILENUM);
 		SDL_RenderCopy(stage -> renderer, bullTex, NULL, &bullButton);
 
 
