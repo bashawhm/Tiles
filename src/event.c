@@ -43,8 +43,6 @@ void menuEvents(Stage *stage){
 					stage -> needsUpdate = true;
 				}
 			}
-
-
 			break;
 		}
 		case SDL_WINDOWEVENT_RESIZED: {
@@ -98,36 +96,69 @@ void gameEvents(Stage *stage){
 			i32 mouseY;
 			SDL_GetMouseState(&mouseX, &mouseY);
 			//This is messy sorry. Haven't /yet/ figured out a clean way to fix it.
+			//Bulldozer button
+			if (mouseX > (stage -> screenWidth - (stage -> screenWidth / TILENUM)) && (mouseX < (stage -> screenWidth - (stage -> screenWidth / TILENUM) + (stage -> screenWidth / TILENUM))) && (mouseY > (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM))) && (mouseY < (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM) + (stage -> screenHeight / TILENUM)))) {
+				if (stage -> stagedEvent != Bulldozer){
+					stage -> stagedEvent = Bulldozer;
+					stage -> needsUpdate = true;
+				// Else if required for when there are more than two states of stagedEvent
+				} else if (stage -> stagedEvent == Bulldozer) {
+					stage -> stagedEvent = None;
+					stage -> needsUpdate = true;
+				}
+			}
+			//house button
+			if ((mouseX > ((2 * (stage -> screenWidth / TILENUM)))) && (mouseX < (((2 * (stage -> screenWidth / TILENUM))) + (stage -> screenWidth / TILENUM))) && (mouseY > ((stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM)))) & (mouseY < ((stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM)) + (stage -> screenHeight / TILENUM)))){
+				if (stage -> stagedEvent == House) {
+					stage -> stagedEvent = None;
+					stage -> needsUpdate = true;
+				} else {
+					stage -> stagedEvent = House;
+					stage -> needsUpdate = true;
+				}
+			}
+
 			//Ignore if they click within the legend
 			if ((mouseY > stage -> screenHeight - (2 * (stage -> screenHeight / TILENUM))) && (mouseY < stage -> screenHeight)) {
 				break;
 			}
-			//Bulldozer button
-			if (mouseX > (stage -> screenWidth - (stage -> screenWidth / TILENUM)) && (mouseX < (stage -> screenWidth - (stage -> screenWidth / TILENUM) + (stage -> screenWidth / TILENUM))) && (mouseY > (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM))) && (mouseY < (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM) + (stage -> screenHeight / TILENUM)))) {
-				if (stage -> stagedEvent == None){
-					stage -> stagedEvent = Bulldozer;
-				// Else if required for when there are more than two states of stagedEvent
-				} else if (stage -> stagedEvent == Bulldozer) {
-					stage -> stagedEvent = None;
-				}
-			}
-
 			i32 tileX = (mouseX / (stage -> screenWidth / TILENUM));
 			i32 tileY = (mouseY / (stage -> screenHeight / TILENUM));
 			// printf("tileX: %d  |  tileY %d\n", tileX, tileY);
 			if (stage -> stagedEvent == Bulldozer){
 				stage -> game -> tiles[tileX][tileY].type = Normal;
 			// Else if required for when there are more than two states of stagedEvent
-			} else if (stage -> stagedEvent == None) {
+			} /*else if (stage -> stagedEvent == None) {
 				stage -> game -> tiles[tileX][tileY].type = Dark;
+			}*/ else if (stage -> stagedEvent == House) {
+				stage -> game -> tiles[tileX][tileY].type = Residential;
 			}
 			stage -> needsUpdate = true;
 			break;
 			
 			
 		}
-		case SDL_WINDOWEVENT_RESIZED: {
+		case SDL_WINDOWEVENT: {
 			//resize code goes here!
+			switch (event.window.event) {
+			case SDL_WINDOWEVENT_RESIZED: {
+				i32 tmpHeight;
+				i32 tmpWidth;
+				SDL_GetRendererOutputSize(stage -> renderer, &tmpWidth, &tmpHeight);
+				stage -> screenHeight = tmpWidth;
+				stage -> screenWidth = tmpHeight;
+				for (i32 i = 0; i < TILENUM; ++i){
+					for (i32 j = 0; j < TILENUM; ++j){
+						stage -> game -> tiles[i][j].tile.x = ((stage -> screenWidth / TILENUM) * i);
+						stage -> game -> tiles[i][j].tile.y = ((stage -> screenHeight / TILENUM) * j);
+						stage -> game -> tiles[i][j].tile.w = (stage -> screenWidth / TILENUM);
+						stage -> game -> tiles[i][j].tile.h = (stage -> screenHeight / TILENUM);
+					}
+				}
+				stage -> needsUpdate = true;
+			}
+
+			}
 			break;
 		}
 		case SDL_QUIT: {

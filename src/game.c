@@ -46,12 +46,19 @@ void renderGame(Stage *stage){
 		SDL_Texture *dTileTex = SDL_CreateTextureFromSurface(stage -> renderer, dTileSur);
 		SDL_FreeSurface(dTileSur);
 
+		SDL_Surface *houseSur = IMG_Load("assets/house.png");
+		SDL_Texture *houseTex = SDL_CreateTextureFromSurface(stage -> renderer, houseSur);
+		SDL_FreeSurface(houseSur);
+
+
 		for (i32 i = 0; i < TILENUM; ++i){
 			for (i32 j = 0; j < TILENUM; ++j){
 				if ((stage -> game -> tiles[i][j].type) == Normal){
 					SDL_RenderCopy(stage -> renderer, tileTex, NULL, &(stage -> game -> tiles[i][j].tile));
 				} else if ((stage -> game -> tiles[i][j].type) == Dark) {
 					SDL_RenderCopy(stage -> renderer, dTileTex, NULL, &(stage -> game -> tiles[i][j].tile));
+				} else if ((stage -> game -> tiles[i][j].type) == Residential) {
+					SDL_RenderCopy(stage -> renderer, houseTex, NULL, &(stage -> game -> tiles[i][j].tile));
 				}
 			}
 		}
@@ -76,14 +83,24 @@ void renderLegend(Stage *stage){
 		SDL_RenderCopy(stage -> renderer, legTex, NULL, &legend);
 
 		//Render Bulldozer
-		SDL_Surface *bullSur;
-		if (stage -> stagedEvent == None) {
+		SDL_Surface *bullSur = NULL;
+		if (stage -> stagedEvent != Bulldozer) {
 			bullSur = IMG_Load("assets/bulldozer.png");
-		} else {
+		} else if (stage -> stagedEvent == Bulldozer) {
 			bullSur = IMG_Load("assets/bulldozerDark.png");
 		}
+		SDL_Surface *resSur = NULL;
+		if (stage -> stagedEvent != House) {
+			resSur = IMG_Load("assets/houseButton.png");
+		} else if (stage -> stagedEvent == House) {
+			resSur = IMG_Load("assets/houseButton.png");
+		}
+
 		SDL_Texture *bullTex = SDL_CreateTextureFromSurface(stage -> renderer, bullSur);
 		SDL_FreeSurface(bullSur);
+
+		SDL_Texture *houseTex = SDL_CreateTextureFromSurface(stage -> renderer, resSur);
+		SDL_FreeSurface(resSur);
 
 		SDL_Rect bullButton;
 		bullButton.x = (stage -> screenWidth - (stage -> screenWidth / TILENUM));
@@ -92,6 +109,12 @@ void renderLegend(Stage *stage){
 		bullButton.h = (stage -> screenHeight / TILENUM);
 		SDL_RenderCopy(stage -> renderer, bullTex, NULL, &bullButton);
 
+		SDL_Rect resButton;
+		resButton.x = ((2 * (stage -> screenWidth / TILENUM)));
+		resButton.y = (stage -> screenHeight - 2 * (stage -> screenHeight / TILENUM));
+		resButton.w = (stage -> screenWidth / TILENUM);
+		resButton.h = (stage -> screenHeight / TILENUM);
+		SDL_RenderCopy(stage -> renderer, houseTex, NULL, &resButton);
 
 	}
 }

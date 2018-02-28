@@ -2,7 +2,7 @@
 #include "type.h"
 #include "SDL2/SDL.h"
 
-typedef enum State{
+typedef enum State {
 	MenuMode,
 	EscMenuMode,
 	GameMode,
@@ -17,6 +17,7 @@ typedef enum TileType {
 typedef enum StagedEvent {
 	None,
 	Bulldozer,
+	House,
 } StagedEvent;
 
 typedef struct Tile {
@@ -51,6 +52,7 @@ static inline Stage * newStage(State newState, i32 height, i32 width){
 	Game *game = (Game *)malloc(sizeof(Game));
 	newStage -> window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINWIDTH, WINHEIGHT, SDL_WINDOW_SHOWN);
 	newStage -> renderer = SDL_CreateRenderer(newStage -> window, -1, SDL_RENDERER_PRESENTVSYNC);
+	SDL_SetWindowResizable(newStage -> window, true);
 	newStage -> game = game;
 	newStage -> alive = true;
 	newStage -> currState = newState;
