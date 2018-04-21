@@ -1,4 +1,5 @@
 #pragma once
+#include <stdlib.h>
 #include "type.h"
 #include "SDL2/SDL.h"
 
@@ -25,16 +26,26 @@ typedef struct Tile {
 	TileType type;
 } Tile;
 
+typedef struct Economy {
+	i64 money;
+	f64 resTaxRate;
+
+} Economy;
+
 typedef struct Game {
 	Tile tiles[TILENUM][TILENUM];
-
+	Economy *econ;
 } Game;
+
+
 
 typedef struct Stage {
 	SDL_Window * window;
 	SDL_Renderer * renderer;
 	Game *game;
 	
+	time_t start;
+	time_t current;
 	i32 screenWidth;
 	i32 screenHeight;
 
@@ -50,6 +61,11 @@ typedef struct Stage {
 static inline Stage * newStage(State newState, i32 height, i32 width){
 	Stage *newStage = (Stage *)malloc(sizeof(Stage));
 	Game *game = (Game *)malloc(sizeof(Game));
+	newStage -> start = time(NULL);
+	newStage -> current = time(NULL);
+	game -> econ = (Economy*)malloc(sizeof(Economy));
+	game -> econ -> money = 0;
+	game -> econ -> resTaxRate = 1.08;
 	newStage -> window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINWIDTH, WINHEIGHT, SDL_WINDOW_SHOWN);
 	newStage -> renderer = SDL_CreateRenderer(newStage -> window, -1, SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetWindowResizable(newStage -> window, true);
@@ -73,4 +89,5 @@ static inline void destroyStage(Stage * stage){
 
 static inline void initGraphics(void){
 	SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
 }

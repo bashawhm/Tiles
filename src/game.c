@@ -2,6 +2,7 @@
 #include "type.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
 
 void renderLegend(Stage *);
 
@@ -93,8 +94,18 @@ void renderLegend(Stage *stage){
 		if (stage -> stagedEvent != House) {
 			resSur = IMG_Load("assets/houseButton.png");
 		} else if (stage -> stagedEvent == House) {
-			resSur = IMG_Load("assets/houseButton.png");
+			resSur = IMG_Load("assets/houseButtonDark.png");
 		}
+		TTF_Font *bankFont = TTF_OpenFont("assets/Lato.ttf", 200);
+		SDL_Color fontColor = {255, 255, 255, 255};
+
+
+		char bankVal[100];
+		sprintf(bankVal, "$%d", getTotalMoney(stage));
+
+		SDL_Surface *bankSur = TTF_RenderText_Solid(bankFont, bankVal, fontColor);
+		SDL_Texture *bankTex = SDL_CreateTextureFromSurface(stage -> renderer, bankSur);
+		SDL_FreeSurface(bankSur);
 
 		SDL_Texture *bullTex = SDL_CreateTextureFromSurface(stage -> renderer, bullSur);
 		SDL_FreeSurface(bullSur);
@@ -115,6 +126,14 @@ void renderLegend(Stage *stage){
 		resButton.w = (stage -> screenWidth / TILENUM);
 		resButton.h = (stage -> screenHeight / TILENUM);
 		SDL_RenderCopy(stage -> renderer, houseTex, NULL, &resButton);
+
+
+		SDL_Rect bankBox;
+		bankBox.x = 0;
+		bankBox.y = (stage -> screenHeight - (stage -> screenHeight / TILENUM));
+		bankBox.w = 2 * (stage -> screenWidth / TILENUM);
+		bankBox.h = (stage -> screenHeight / TILENUM);
+		SDL_RenderCopy(stage -> renderer, bankTex, NULL, &bankBox);
 
 	}
 }

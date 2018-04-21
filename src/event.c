@@ -88,6 +88,15 @@ void gameEvents(Stage *stage){
 				stage -> needsUpdate = true;
 				break;
 			}
+			case SDLK_h: {
+				if (stage -> stagedEvent != House){
+					stage -> stagedEvent = House;
+				} else if (stage -> stagedEvent == House) {
+					stage -> stagedEvent = None;
+				}
+				stage -> needsUpdate = true;
+				break;
+			}
 			}
 			break;
 		}
@@ -147,6 +156,7 @@ void gameEvents(Stage *stage){
 				SDL_GetRendererOutputSize(stage -> renderer, &tmpWidth, &tmpHeight);
 				stage -> screenHeight = tmpWidth;
 				stage -> screenWidth = tmpHeight;
+				// printf("resize! width: %d  |  height %d\n", stage -> screenWidth, stage -> screenHeight);
 				for (i32 i = 0; i < TILENUM; ++i){
 					for (i32 j = 0; j < TILENUM; ++j){
 						stage -> game -> tiles[i][j].tile.x = ((stage -> screenWidth / TILENUM) * i);

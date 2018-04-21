@@ -1,6 +1,6 @@
 CC ?= clang
-CFLAGS += -pipe -march=native -Wall -Wextra -Wmost -pedantic  -O3 -std=c11 `sdl2-config --cflags`
-LDFLAGS += `sdl2-config --libs` -lSDL2_image -lSDL2_mixer
+CFLAGS += -pipe -std=c11 -march=native -Wall -Wextra -Wmost -pedantic  -O3  `sdl2-config --cflags` 
+LDFLAGS += `sdl2-config --libs` -lSDL2_ttf -lSDL2_image -lSDL2_mixer 
 
 TARGET := tiles
 

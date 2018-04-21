@@ -6,36 +6,37 @@
 #include "stage.h"
 #include "type.h"
 
+// void *econHandler(void *stuff);
+
+
 int main(){
 	initGraphics();
 
 	Stage *stage = newStage(MenuMode, WINHEIGHT, WINWIDTH);
 	initTiles(stage);
-	renderMenu(stage);
 
 	//Main Event Loop
 	while (stage -> alive){
+		stage -> current = time(NULL);
+		
 		switch (stage -> currState){
-		case MenuMode: {
-			renderMenu(stage);
-			menuEvents(stage);
-			break;
-		}
-		case EscMenuMode: {
-			renderMenu(stage);
-			menuEvents(stage);
-			break;
-		}
 		case GameMode: {
+			if ((stage -> current - stage -> start) % 30 == 0){
+				updateEcon(stage);
+			}
 			renderGame(stage);
 			gameEvents(stage);
+			break;
+		}
+		default: {
+			renderMenu(stage);
+			menuEvents(stage);
 			break;
 		}
 		}
 		//~60Hz
 		usleep(16667);
 	}
-	
 	destroyStage(stage);
 
 	return 0;
