@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "type.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 
 typedef enum State {
 	MenuMode,
@@ -35,6 +36,25 @@ typedef struct Economy {
 typedef struct Game {
 	Tile tiles[TILENUM][TILENUM];
 	Economy *econ;
+
+	//Textures
+	SDL_Texture *background;
+	SDL_Texture *tileTex;
+	SDL_Texture *dTileTex;
+	SDL_Texture *houseTex;
+
+	//Button surfaces
+	SDL_Surface *bullSur;
+	SDL_Surface *bullSurDark;
+	SDL_Surface *resSur;
+	SDL_Surface *resSurDark;
+
+	//Legent Textures
+	SDL_Texture *legTex;
+	
+	//Fonts
+	TTF_Font *font;
+
 } Game;
 
 
@@ -64,7 +84,7 @@ static inline Stage * newStage(State newState, i32 height, i32 width){
 	newStage -> start = time(NULL);
 	newStage -> current = time(NULL);
 	game -> econ = (Economy*)malloc(sizeof(Economy));
-	game -> econ -> money = 0;
+	game -> econ -> money = STARTMONEY;
 	game -> econ -> resTaxRate = 1.08;
 	newStage -> window = SDL_CreateWindow("Tiles", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINWIDTH, WINHEIGHT, SDL_WINDOW_SHOWN);
 	newStage -> renderer = SDL_CreateRenderer(newStage -> window, -1, SDL_RENDERER_PRESENTVSYNC);

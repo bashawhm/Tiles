@@ -6,19 +6,17 @@
 #include "stage.h"
 #include "type.h"
 
-// void *econHandler(void *stuff);
-
 
 int main(){
 	initGraphics();
 
 	Stage *stage = newStage(MenuMode, WINHEIGHT, WINWIDTH);
 	initTiles(stage);
+	initTex(stage);
 
 	//Main Event Loop
 	while (stage -> alive){
 		stage -> current = time(NULL);
-		
 		switch (stage -> currState){
 		case GameMode: {
 			if ((stage -> current - stage -> start) % 30 == 0){

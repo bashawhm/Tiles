@@ -33,6 +33,7 @@ void menuEvents(Stage *stage){
 			if ((mouseX > ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET)) && (mouseX < ((stage -> screenWidth / 2) - NEWGAMEBUTTONXOFFSET + 200)) && (mouseY > ((stage -> screenHeight / 2) - (stage -> screenHeight / 6))) && (mouseY < (stage -> screenHeight / 2) - (stage -> screenHeight / 6) + 40)){
 				//Spawn new Game
 				initTiles(stage);
+				stage -> game -> econ -> money = STARTMONEY;
 				stage -> needsUpdate = true;
 				stage -> currState = GameMode;
 			}
@@ -140,7 +141,10 @@ void gameEvents(Stage *stage){
 			} /*else if (stage -> stagedEvent == None) {
 				stage -> game -> tiles[tileX][tileY].type = Dark;
 			}*/ else if (stage -> stagedEvent == House) {
-				stage -> game -> tiles[tileX][tileY].type = Residential;
+				if (stage -> game -> econ -> money >= 250){
+					stage -> game -> econ -> money -= 250;
+					stage -> game -> tiles[tileX][tileY].type = Residential;
+				}
 			}
 			stage -> needsUpdate = true;
 			break;

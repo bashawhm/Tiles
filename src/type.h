@@ -27,4 +27,5 @@ typedef u8 bool;
 
 #define TILENUM (16)
 #define RESTAXBASE (2)
+#define STARTMONEY (1000)
 
